@@ -97,10 +97,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 'mail_log_only' => false,
                 'installed_at' => date('c'),
             ];
-            $php = "<?php\n// GorilaGym · configuración generada por el instalador. NO publicar este archivo.\n// Para mover a otro dominio: cambia base_url (y mail_from). Las rutas son relativas a esta carpeta.\n"
+            $php = "<?php\n// GorilaGym · configuración generada por el instalador. NO publicar este archivo.\n// Para mover a otro dominio: cambia base_url (y mail_from). Las rutas son relativas a la carpeta private/.\n"
                 . "return [\n"
                 . "    'base_url' => " . var_export($cfg['base_url'], true) . ",\n"
-                . "    'db_path' => __DIR__ . '/storage/db/gorila.sqlite',\n"
+                . "    'db_path' => PRIVATE_DIR . '/storage/db/gorila.sqlite',\n"
                 . "    'timezone' => 'America/Santiago',\n"
                 . "    'mail_from' => " . var_export($cfg['mail_from'], true) . ",\n"
                 . "    'app_key' => " . var_export($cfg['app_key'], true) . ",\n"
@@ -111,8 +111,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 . "    'debug' => false,\n"
                 . "    'mail_log_only' => false, // true = no envía correos, los escribe en storage/logs/mail.log (pruebas)\n"
                 . "];\n";
-            if (file_put_contents(PRIVATE_DIR . '/config.php', $php) === false) throw new RuntimeException('No se pudo escribir private/config.php');
-            @chmod(PRIVATE_DIR . '/config.php', 0640);
+            if (file_put_contents(CONFIG_FILE, $php) === false) throw new RuntimeException('No se pudo escribir private/config.php');
+            @chmod(CONFIG_FILE, 0640);
 
             require_once PRIVATE_DIR . '/app/seed.php';
             run_migrations();
@@ -127,7 +127,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             file_put_contents(PRIVATE_DIR . '/storage/install.lock', date('c'));
             $done = ['base' => $base, 'cron' => PRIVATE_DIR . '/cron/cron.php', 'cron_url' => $base . '/?r=api/cron&token=' . $cfg['cron_token']];
         } catch (Throwable $e) {
-            @unlink(PRIVATE_DIR . '/config.php');
+            @unlink(CONFIG_FILE);
             $errors[] = 'Error durante la instalación: ' . $e->getMessage();
         }
     }

@@ -2,7 +2,7 @@
 // Ejemplo de configuración. El instalador genera private/config.php automáticamente.
 return [
     'base_url' => 'https://tudominio.cl/gorilagym',
-    'db_path' => __DIR__ . '/storage/db/gorila.sqlite',
+    'db_path' => PRIVATE_DIR . '/storage/db/gorila.sqlite',
     'timezone' => 'America/Santiago',
     'mail_from' => 'no-reply@tudominio.cl',
     'app_key' => 'generado-por-el-instalador',

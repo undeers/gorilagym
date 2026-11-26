@@ -8,6 +8,8 @@ PHP 8.1+ · SQLite (WAL) · Tailwind (compilado) · Hugeicons · sin Composer ni
 
 ## 1. Instalación (llegar y descomprimir)
 
+> **¿Docker / Dokploy?** Mira [DOKPLOY.md](DOKPLOY.md): la imagen incluye el cron y el envío por SMTP.
+
 1. Sube el zip a la raíz pública del hosting (ej: `public_html/`) y descomprímelo. Queda la carpeta `gorilagym/`.
 2. Abre `https://tudominio.cl/gorilagym/install/`.
 3. El instalador revisa requisitos, crea la base de datos, genera las claves (app, cron, notificaciones push) y crea el super admin.

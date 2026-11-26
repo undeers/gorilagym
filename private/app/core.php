@@ -7,13 +7,15 @@ declare(strict_types=1);
 define('APP_VERSION', '1.6.0');
 define('PRIVATE_DIR', dirname(__DIR__));
 define('ROOT_DIR', dirname(PRIVATE_DIR));
+// Ruta de config.php. En Docker se apunta al volumen persistente con GG_CONFIG_FILE.
+define('CONFIG_FILE', getenv('GG_CONFIG_FILE') ?: PRIVATE_DIR . '/config.php');
 
 // ---------------------------------------------------------------- Config
 function config(?string $key = null, $default = null)
 {
     static $cfg = null;
     if ($cfg === null) {
-        $file = PRIVATE_DIR . '/config.php';
+        $file = CONFIG_FILE;
         $cfg = is_file($file) ? (require $file) : [];
     }
     if ($key === null) return $cfg;
@@ -22,7 +24,7 @@ function config(?string $key = null, $default = null)
 
 function is_installed(): bool
 {
-    return is_file(PRIVATE_DIR . '/config.php') && is_file(PRIVATE_DIR . '/storage/install.lock');
+    return is_file(CONFIG_FILE) && is_file(PRIVATE_DIR . '/storage/install.lock');
 }
 
 // ---------------------------------------------------------------- Errores

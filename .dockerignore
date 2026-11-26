@@ -1,0 +1,15 @@
+.git
+.github
+.DS_Store
+node_modules
+private/config.php
+private/storage/db/*
+private/storage/backups/*
+private/storage/logs/*
+private/storage/cache/*
+private/storage/imports/*
+media/avatars/*
+media/branding/*
+media/ejercicios/*
+media/maquinas/*
+!**/.gitkeep
